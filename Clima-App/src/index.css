@@ -8,7 +8,6 @@
 
 /* 2. Estilo do Corpo da Aplicação */
 body {
-  /* Cor de fundo escura, como no seu design */
   background-color: #1b0642; 
   color: #f0f8ff; 
   min-height: 100vh;
@@ -19,7 +18,6 @@ body {
 }
 
 /* 3. Ajuste no #root */
-/* Garante que o container React (o ID 'root') ocupe toda a tela */
 #root {
   width: 100%;
   display: flex;

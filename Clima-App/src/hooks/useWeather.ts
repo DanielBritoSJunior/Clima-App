@@ -6,14 +6,13 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 export const useWeather = (city: string) => {
   const [data, setData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null); // <<< Estado de erro
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=pt_br`;
 
     const fetchData = async () => {
       setLoading(true);
-      // NÃO LIMPE O ERRO AQUI! O WeatherCard fará isso no handleSubmit.
 
       try {
         const response = await fetch(url);
