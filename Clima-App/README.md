@@ -1,54 +1,72 @@
-# ⛈️ [Clima App]
-> Um aplicativo moderno para consulta de clima em tempo real, construído com React e tipagem forte via TypeScript.
+# React + TypeScript + Vite
 
-## ✨ Funcionalidades
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-* **Busca por Cidade:** Pesquisa o clima em tempo real para qualquer cidade do mundo.
-* **Detalhes Completos:** Exibe temperatura atual, mínima, máxima, velocidade do vento, umidade e pressão atmosférica.
-* **Ícones Dinâmicos:** Usa os ícones oficiais do OpenWeather para representar o clima atual.
-* **Tratamento de Erros:** Sistema robusto que permite ao usuário corrigir nomes de cidades inválidos (Erro 404) e tentar novamente sem precisar recarregar a página.
-* **Tipagem Forte:** Todo o projeto é construído com **TypeScript** para garantir menos bugs e maior escalabilidade.
+Currently, two official plugins are available:
 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 🛠️ Tecnologias
+## React Compiler
 
-* **Frontend:** React (Hooks)
-* **Linguagem:** TypeScript
-* **Estilização:** CSS Modules
-* **Build Tool:** Vite
-* **API:** OpenWeatherMap API (Endpoint `weather` 2.5)
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
+## Expanding the ESLint configuration
 
-------------------------------------------------------------------------------------------------------------------------------------
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## ⚙️ Configuração e Instalação
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-Siga os passos para rodar o projeto localmente:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone [link-repositorio]
-    cd nome-do-projeto
-    ```
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-2.  **Instale as dependências:**
-    ```bash
-    npm install
-    # ou
-    yarn install
-    ```
-
-3.  **Configure a API Key:**
-    Crie um arquivo chamado `.env` na raiz do projeto e insira sua chave da OpenWeather:
-    ```
-    VITE_OPENWEATHER_API_KEY=SUA_CHAVE_AQUI
-    ```
-
-4.  **Inicie o servidor:**
-    ```bash
-    npm run dev
-    # ou
-    yarn dev
-    ```
-    O aplicativo estará disponível em `http://localhost:5173` (ou a porta exibida).
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
