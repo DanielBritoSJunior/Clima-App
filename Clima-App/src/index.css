@@ -1,0 +1,28 @@
+/* 1. Reset Básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif; 
+}
+
+/* 2. Estilo do Corpo da Aplicação */
+body {
+  /* Cor de fundo escura, como no seu design */
+  background-color: #1b0642; 
+  color: #f0f8ff; 
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding: 20px;
+}
+
+/* 3. Ajuste no #root */
+/* Garante que o container React (o ID 'root') ocupe toda a tela */
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
