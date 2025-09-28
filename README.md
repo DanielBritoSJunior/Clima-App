@@ -1,4 +1,4 @@
-⛈️ [Clima App]
+⛈️ Clima App
 > Um aplicativo moderno para consulta de clima em tempo real, construído com React e tipagem forte via TypeScript.
 
 ✨ Funcionalidades
