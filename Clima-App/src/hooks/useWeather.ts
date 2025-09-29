@@ -9,23 +9,35 @@ export const useWeather = (city: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=pt_br`;
-
     const fetchData = async () => {
       setLoading(true);
+      setError(null); // Limpa erros anteriores ao iniciar nova busca
+
+      if (!API_KEY) {
+        setError('Chave de API não configurada. Verifique suas variáveis de ambiente.');
+        setLoading(false);
+        return;
+      }
+
+      const encodedCity = encodeURIComponent(city);
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${API_KEY}&units=metric&lang=pt_br`;
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(url );
         if (!response.ok) {
-          throw new Error(`Erro: Cidade "${city}" não encontrada. Status: ${response.status}`);
+          if (response.status === 401) {
+            throw new Error('Erro 401: Chave de API inválida ou não autorizada. Verifique sua chave.');
+          } else if (response.status === 404) {
+            throw new Error(`Erro 404: Cidade "${city}" não encontrada. Tente outro nome.`);
+          } else {
+            throw new Error(`Erro HTTP! Status: ${response.status}`);
+          }
         }
         const result = await response.json();
         setData(result);
-        setError(null); // Limpa o erro se a busca for bem-sucedida
       } catch (err) {
-        // Define o novo erro se a busca falhar
         setError(err instanceof Error ? err.message : 'Ocorreu um erro desconhecido.');
-        setData(null); // Garante que os dados antigos sumam
+        setData(null);
       } finally {
         setLoading(false);
       }
@@ -34,8 +46,7 @@ export const useWeather = (city: string) => {
     if (city) {
       fetchData();
     }
-  }, [city]);
+  }, [city, API_KEY]); // Adicionado API_KEY como dependência para re-executar se mudar
 
-  // RETORNA O SET ERROR para que o componente principal possa limpá-lo
   return { data, loading, error, setError }; 
 };
