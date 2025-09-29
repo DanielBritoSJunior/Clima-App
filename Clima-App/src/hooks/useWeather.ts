@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import type { WeatherData } from '../types/weather';
 
-// @ts-ignore: O 'process' é injetado pelo Node/Vercel, mas não é reconhecido pelo TS.
-const API_KEY = process.env.OPENWEATHER_API_KEY || import.meta.env.VITE_OPENWEATHER_API_KEY;
+// VOLTANDO PARA A LEITURA PADRÃO DO VITE
+// @ts-ignore: O 'process' não é mais necessário, mas o ts-ignore ajuda.
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY; 
 
 export const useWeather = (city: string) => {
     const [data, setData] = useState<WeatherData | null>(null);
@@ -12,7 +13,7 @@ export const useWeather = (city: string) => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            setError(null); // Limpa erros anteriores ao iniciar nova busca
+            setError(null); 
 
             // 🚨 MENSAGEM CRÍTICA DE CONFIGURAÇÃO DE CHAVE
             if (!API_KEY || API_KEY.length < 32) {
@@ -23,7 +24,6 @@ export const useWeather = (city: string) => {
 
             const encodedCity = encodeURIComponent(city);
             
-            // Usando Template String para a URL
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedCity}&appid=${API_KEY}&units=metric&lang=pt_br`;
 
             try {
