@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { WeatherData } from '../types/weather';
 
-const API_KEY = import.meta.env.OPENWEATHER_API_KEY;
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 export const useWeather = (city: string) => {
   const [data, setData] = useState<WeatherData | null>(null);
