@@ -138,7 +138,7 @@ const WeatherCard: React.FC = () => {
                 </div>
             </div>
             
-            <p className={styles.footerText}>DanielBSJunior</p>
+            <p className={styles.footerText}>DanielBritoSJunior</p>
         </div>
     );
 };
